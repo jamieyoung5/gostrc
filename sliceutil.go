@@ -1,4 +1,4 @@
-package sliceutil
+package go_strc
 
 import (
 	"math/rand"

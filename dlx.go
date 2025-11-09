@@ -1,4 +1,4 @@
-package dlx
+package go_strc
 
 import (
 	"fmt"

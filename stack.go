@@ -1,4 +1,4 @@
-package stack
+package go_strc
 
 import (
 	"container/list"

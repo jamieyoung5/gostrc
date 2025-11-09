@@ -1,4 +1,4 @@
-package queue
+package go_strc
 
 import "sync"
 
