@@ -1,7 +1,8 @@
-package go_strc
+package gostrc
 
 import "sync"
 
+// CircularQueue implements a thread-safe fixed-size fifo ring buffer
 type CircularQueue[T any] struct {
 	data        []T
 	head, tail  int
@@ -16,6 +17,7 @@ func NewCircularQueue[T any](size int) *CircularQueue[T] {
 	}
 }
 
+// Enqueue adds a new element to the back of the queue
 func (cq *CircularQueue[T]) Enqueue(value T) bool {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()
@@ -30,6 +32,7 @@ func (cq *CircularQueue[T]) Enqueue(value T) bool {
 	return true
 }
 
+// Dequeue removes the element at the front of the queue
 func (cq *CircularQueue[T]) Dequeue() (T, bool) {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()
@@ -45,6 +48,7 @@ func (cq *CircularQueue[T]) Dequeue() (T, bool) {
 	return value, true
 }
 
+// Peek returns the element at the head of the queue, if there is one
 func (cq *CircularQueue[T]) Peek() (T, bool) {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()
@@ -57,18 +61,21 @@ func (cq *CircularQueue[T]) Peek() (T, bool) {
 	return cq.data[cq.head], true
 }
 
+// IsEmpty returns true if the queue is empty, false if not
 func (cq *CircularQueue[T]) IsEmpty() bool {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()
 	return cq.count == 0
 }
 
+// IsFull returns true if the queue is full, false if not
 func (cq *CircularQueue[T]) IsFull() bool {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()
 	return cq.count == cq.size
 }
 
+// Size returns the number of queued elements
 func (cq *CircularQueue[T]) Size() int {
 	cq.lock.Lock()
 	defer cq.lock.Unlock()

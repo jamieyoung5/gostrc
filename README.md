@@ -1,4 +1,4 @@
-# go-strc
+# gostrc
 
 This repository is a compilation of various algorithm and data structure implementations in Go, developed during university or for personal projects.
 
@@ -6,7 +6,7 @@ This repository is a compilation of various algorithm and data structure impleme
 
 This collection currently includes:
 
-* **Dancing Links (Algorithm X):** An implementation of Knuth's Algorithm X using the Dancing Links (DLX) technique for solving exact cover problems. (Found in `dlx.go`, `column.go`)
+* **Dancing Links (Algorithm X):** An implementation of Knuth's Algorithm X using the Dancing Links (DLX) technique for solving exact cover problems. (Found in `dlx/dlx.go`, `dlx/column.go`)
 * **Thread-Safe Stack:** A generic, concurrent-safe Stack implementation. (Found in `stack.go`)
 * **Thread-Safe Circular Queue:** A generic, concurrent-safe, fixed-size circular queue. (Found in `circular_queue.go`)
 * **Slice Utilities:** A set of generic helper functions for common slice operations, such as:
@@ -14,9 +14,9 @@ This collection currently includes:
     * `Reverse`
     * `Equal`
     * `CountDuplicates`
-    * `Counts` (Found in `sliceutil.go`)
+    * `Counts` (Found in `sliceutil/slice.go`)
 
 ## Installation
 
 ```bash
-go get https://github.com/jamieyoung5/go-strc
+go get https://github.com/jamieyoung5/gostrc

@@ -1,3 +1,3 @@
-module github.com/jamieyoung5/go-strc
+module github.com/jamieyoung5/gostrc
 
-go 1.23.7
+go 1.25

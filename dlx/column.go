@@ -1,4 +1,4 @@
-package go_strc
+package dlx
 
 type Column struct {
 	*Node
