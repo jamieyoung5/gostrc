@@ -1,6 +1,6 @@
 # gostrc
 
-[![Test](https://github.com/jamieyoung5/gostrc/actions/workflows/test.yml/badge.svg)](https://github.com/jamieyoung5/gostrc/actions/workflows/test.yml)
+[![Test](https://github.com/jamieyoung5/gostrc/actions/workflows/test.yml/badge.svg)](https://github.com/jamieyoung5/gostrc/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/jamieyoung5/gostrc/graph/badge.svg?token=YOUR_TOKEN_ID)](https://codecov.io/gh/jamieyoung5/gostrc)
 
 This repository is a compilation of various algorithm and data structure implementations in Go, developed during university or for personal projects.
