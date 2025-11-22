@@ -1,9 +1,14 @@
+<div align="center">
 # gostrc
 
 [![Ci](https://github.com/jamieyoung5/gostrc/actions/workflows/ci.yaml/badge.svg)](https://github.com/jamieyoung5/gostrc/actions/workflows/ci.yaml)
 [![codecov](https://codecov.io/gh/jamieyoung5/gostrc/graph/badge.svg?token=YOUR_TOKEN_ID)](https://codecov.io/gh/jamieyoung5/gostrc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jamieyoung5/gostrc)](https://goreportcard.com/report/jamieyoung5/gostrc/repo)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jamieyoung5/gostrc.svg)](https://pkg.go.dev/github.com/jamieyoung5/gostrc)
 
 This repository is a compilation of various algorithm and data structure implementations in Go, developed during university or for personal projects.
+
+</div>
 
 ## Implementations
 
