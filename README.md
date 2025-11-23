@@ -24,7 +24,10 @@ This collection currently includes:
     - `CountDuplicates`
     - `Counts` (Found in `sliceutil/sliceutil.go`)
 - **String Utilities:** helper functions for common string related operations, such as:
-    - `MaxLen` (Found in `strutil/strutil.go`)
+    - `MaxLen`
+    - `PadBlock`
+    - `PadRows`
+    - `SideBySide` (Found in `strutil/strutil.go`)
 
 ## Installation
 
