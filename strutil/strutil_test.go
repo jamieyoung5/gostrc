@@ -1,8 +1,10 @@
-package strutil
+package strutil_test
 
 import (
 	"reflect"
 	"testing"
+
+	"github.com/jamieyoung5/gostrc/strutil"
 )
 
 func TestMaxLen(t *testing.T) {
@@ -55,7 +57,7 @@ func TestMaxLen(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := MaxLen(tt.input); got != tt.want {
+			if got := strutil.MaxLen(tt.input); got != tt.want {
 				t.Errorf("MaxLength() = %v, want %v", got, tt.want)
 			}
 		})
@@ -123,7 +125,7 @@ func TestPadRows(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := PadRows(tt.rows, tt.height, tt.width, tt.noValue); !reflect.DeepEqual(got, tt.want) {
+			if got := strutil.PadRows(tt.rows, tt.height, tt.width, tt.noValue); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("PadRows() = %q, want %q", got, tt.want)
 			}
 		})
@@ -167,7 +169,7 @@ func TestPadBlock(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := PadBlock(tt.block, tt.height, tt.width, tt.noValue); !reflect.DeepEqual(got, tt.want) {
+			if got := strutil.PadBlock(tt.block, tt.height, tt.width, tt.noValue); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("PadBlock() = %q, want %q", got, tt.want)
 			}
 		})
@@ -233,7 +235,7 @@ func TestSideBySide(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SideBySide(tt.spacing, tt.blocks...); got != tt.want {
+			if got := strutil.SideBySide(tt.spacing, tt.blocks...); got != tt.want {
 				t.Errorf("SideBySide() = \n%q\nwant \n%q", got, tt.want)
 			}
 		})
