@@ -241,3 +241,171 @@ func TestSideBySide(t *testing.T) {
 		})
 	}
 }
+
+func TestVisibleLen(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  int
+	}{
+		{
+			name:  "empty string",
+			input: "",
+			want:  0,
+		},
+		{
+			name:  "plain text",
+			input: "hello",
+			want:  5,
+		},
+		{
+			name:  "simple ansi color",
+			input: "\x1b[31mred\x1b[0m",
+			want:  3,
+		},
+		{
+			name:  "complex ansi sequences",
+			input: "\x1b[31;1;4mboldredunder\x1b[0m",
+			want:  12,
+		},
+		{
+			name:  "mixed ansi and text",
+			input: "pre\x1b[32mmid\x1b[0mpost",
+			want:  10,
+		},
+		{
+			name:  "only ansi",
+			input: "\x1b[H\x1b[2J",
+			want:  0,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := strutil.VisibleLen(tt.input); got != tt.want {
+				t.Errorf("VisibleLen(%q) = %v, want %v", tt.input, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMaxVisibleLen(t *testing.T) {
+	tests := []struct {
+		name  string
+		input []string
+		want  int
+	}{
+		{
+			name:  "plain strings",
+			input: []string{"a", "bb", "ccc"},
+			want:  3,
+		},
+		{
+			name:  "ansi shorter than plain visible",
+			input: []string{"\x1b[31ma\x1b[0m", "bb"},
+			want:  2, // "a" (1) vs "bb" (2)
+		},
+		{
+			name:  "ansi longer than plain visible",
+			input: []string{"\x1b[31mhello\x1b[0m", "hi"},
+			want:  5, // "hello" (5) vs "hi" (2)
+		},
+		{
+			name:  "mixed ansi strings",
+			input: []string{"\x1b[31mshort\x1b[0m", "\x1b[32mlonger\x1b[0m"},
+			want:  6,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := strutil.MaxVisibleLen(tt.input); got != tt.want {
+				t.Errorf("MaxVisibleLen() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestPadVisibleRows(t *testing.T) {
+	tests := []struct {
+		name    string
+		rows    []string
+		height  int
+		width   int
+		noValue string
+		want    []string
+	}{
+		{
+			name:    "pad ansi string",
+			rows:    []string{"\x1b[31mred\x1b[0m"},
+			height:  1,
+			width:   5,
+			noValue: "",
+			// Should add 2 spaces to the raw string
+			want: []string{"\x1b[31mred\x1b[0m  "},
+		},
+		{
+			name:    "ansi string exact width",
+			rows:    []string{"\x1b[31mred\x1b[0m"},
+			height:  1,
+			width:   3,
+			noValue: "",
+			want:    []string{"\x1b[31mred\x1b[0m"},
+		},
+		{
+			name:    "ansi string truncation (not supported but ensures no panic)",
+			rows:    []string{"\x1b[31mred\x1b[0m"},
+			height:  1,
+			width:   2,
+			noValue: "",
+			// Current implementation does not truncate, just returns as is
+			want: []string{"\x1b[31mred\x1b[0m"},
+		},
+		{
+			name:    "mixed plain and ansi alignment",
+			rows:    []string{"foo", "\x1b[32mbar\x1b[0m"},
+			height:  2,
+			width:   5,
+			noValue: "",
+			want:    []string{"foo  ", "\x1b[32mbar\x1b[0m  "},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := strutil.PadVisibleRows(tt.rows, tt.height, tt.width, tt.noValue)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("PadVisibleRows() = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestPadVisibleBlock(t *testing.T) {
+	tests := []struct {
+		name    string
+		block   string
+		height  int
+		width   int
+		noValue string
+		want    []string
+	}{
+		{
+			name:    "multiline ansi block",
+			block:   "\x1b[31mline1\x1b[0m\nline2",
+			height:  2,
+			width:   6,
+			noValue: "",
+			want:    []string{"\x1b[31mline1\x1b[0m ", "line2 "},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := strutil.PadVisibleBlock(tt.block, tt.height, tt.width, tt.noValue)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("PadVisibleBlock() = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
