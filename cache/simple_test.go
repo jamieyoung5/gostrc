@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func newTestCache() *SimpleCache[string, int] {
-	return &SimpleCache[string, int]{data: map[string]int{}}
+func newTestCache() *Simple[string, int] {
+	return &Simple[string, int]{data: map[string]int{}}
 }
 
 func TestSimpleCacheSetGetRemove(t *testing.T) {

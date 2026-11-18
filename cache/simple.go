@@ -2,21 +2,21 @@ package cache
 
 import "sync"
 
-// SimpleCache is a map with a mutex
-type SimpleCache[K comparable, V any] struct {
+// Simple is a map with a mutex
+type Simple[K comparable, V any] struct {
 	mu   sync.Mutex
 	data map[K]V
 }
 
-func NewSimpleCache[K comparable, V any]() *SimpleCache[K, V] {
+func NewSimple[K comparable, V any]() *Simple[K, V] {
 	data := make(map[K]V)
 
-	return &SimpleCache[K, V]{
+	return &Simple[K, V]{
 		data: data,
 	}
 }
 
-func (sc *SimpleCache[K, V]) Get(key K) (V, bool) {
+func (sc *Simple[K, V]) Get(key K) (V, bool) {
 	sc.mu.Lock()
 	defer sc.mu.Unlock()
 
@@ -24,7 +24,7 @@ func (sc *SimpleCache[K, V]) Get(key K) (V, bool) {
 	return val, ok
 }
 
-func (sc *SimpleCache[K, V]) Set(key K, val V) {
+func (sc *Simple[K, V]) Set(key K, val V) {
 	sc.mu.Lock()
 	defer sc.mu.Unlock()
 
@@ -35,7 +35,7 @@ func (sc *SimpleCache[K, V]) Set(key K, val V) {
 	sc.data[key] = val
 }
 
-func (sc *SimpleCache[K, V]) Remove(key K) {
+func (sc *Simple[K, V]) Remove(key K) {
 	sc.mu.Lock()
 	defer sc.mu.Unlock()
 
